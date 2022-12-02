@@ -7,12 +7,13 @@ public class Combat : MonoBehaviour
 	{
 		var sword = new Sword();
 		var armor = new Armor("Armor", 3, 4);
-		_player1 = new Character("Yuri", 100, sword, armor);
+		_player1 = new Orc(sword, armor);
 
 		//0.1 é o mesmo que 10%, somente a adaga possui crítico
 		var dagger = new Dagger(0.1f);
 		var armor2 = new Armor("Armor", 6, 2);
-		_player2 = new Character("Sonic", 90, dagger, armor2);
+		_player2 = new Elf(dagger, armor2, 0.1f);
+
 	}
 
 	void Update()

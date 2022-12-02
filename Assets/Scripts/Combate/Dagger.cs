@@ -26,7 +26,7 @@ public class Dagger : Weapon
 		if (Random.Range(0f, 1f) < CritChance)
 		{
 			Debug.Log("Critical Hit");
-			finalDamage *= 2;
+			finalDamage *= 3;
 		}
 
 		return finalDamage;

@@ -10,6 +10,7 @@ public abstract class Character
 
 	public bool IsAlive { get => Life > 0; }
 
+	public abstract int Passive();
 	//Construtor do personagem
 	public Character(string name, int life, string raceName, Weapon weapon, Armor armor)
 	{
@@ -42,14 +43,13 @@ public abstract class Character
 		Debug.Log($"Durabilidade da {other.Armor.Name} de {other.Name} é {other.Armor.Durability}, e Resistencia é {other.Armor.Resistence}");
 		other.DealDamage(Weapon.Swing(), other.Armor.Resistence, other.Passive());
 		other.ArmorDurability();
+
 		if (other.Armor.ItsHaveDurability)
 		{
 			Debug.Log($"Durabilidade da Armadura de {other.Name} foi reduzida para {other.Armor.Durability}");
 		}
 
 	}
-
-	public abstract int Passive();
 
 	//mecanica de afiar a arma
 	public void SharpenWeapon()
@@ -79,7 +79,9 @@ public abstract class Character
 
 		if (Weapon != null)
 		{
+
 			Debug.Log($"{Name} já tem uma arma equipada.");
+
 		}
 		else
 		{
@@ -122,8 +124,10 @@ public abstract class Character
 	//verificar a durabilidade da arma
 	private void ArmorDurability()
 	{
+
 		Armor.DurabilityReduce();
 		Armor.ResistenceReduce();
+
 	}
 
 
@@ -144,8 +148,11 @@ public abstract class Character
 	{
 		if (!IsAlive)
 		{
+
 			Debug.Log($"{Name} está morto.");
+
 		}
+
 		return IsAlive;
 	}
 	//chegar se o personagem está com uma arma
@@ -153,8 +160,11 @@ public abstract class Character
 	{
 		if (Weapon == null)
 		{
+
 			Debug.Log($"{Name} não tem uma arma.");
+
 		}
+
 		return Weapon != null;
 	}
 	//chegar se o personagem tem armadura
@@ -162,8 +172,11 @@ public abstract class Character
 	{
 		if (Armor == null)
 		{
+
 			Debug.Log($"{Name} está sem armadura.");
+
 		}
+
 		return Armor != null;
 	}
 
