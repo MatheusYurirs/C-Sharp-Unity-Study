@@ -1,21 +1,29 @@
 using UnityEngine;
-public class Character
+public abstract class Character
 {
 	public string Name { get; private set; }
 	public int Life { get; private set; }
+	public string RaceName { get; private set; }
 	public Weapon Weapon { get; private set; }
-
 	public Armor Armor { get; private set; }
+
 
 	public bool IsAlive { get => Life > 0; }
 
 	//Construtor do personagem
-	public Character(string name, int life, Weapon weapon, Armor armor)
+	public Character(string name, int life, string raceName, Weapon weapon, Armor armor)
 	{
 		Name = name;
 		Life = life;
+		RaceName = raceName;
 		Weapon = weapon;
 		Armor = armor;
+	}
+	public Character(string name, int life, string raceName)
+	{
+		Name = name;
+		Life = life;
+		RaceName = raceName;
 	}
 	//mecanica de atacar o outro personagem
 	public void Attack(Character other)
@@ -30,9 +38,9 @@ public class Character
 
 		if (!HasWeapon()) return;
 
-		Debug.Log($"{Name} atacou {other.Name} com sua {Weapon.Name}.");
+		Debug.Log($"{Name} o {RaceName} atacou {other.Name} com sua {Weapon.Name}.");
 		Debug.Log($"Durabilidade da {other.Armor.Name} de {other.Name} é {other.Armor.Durability}, e Resistencia é {other.Armor.Resistence}");
-		other.DealDamage(Weapon.Swing(), other.Armor.Resistence);
+		other.DealDamage(Weapon.Swing(), other.Armor.Resistence, other.Passive());
 		other.ArmorDurability();
 		if (other.Armor.ItsHaveDurability)
 		{
@@ -40,6 +48,9 @@ public class Character
 		}
 
 	}
+
+	public abstract int Passive();
+
 	//mecanica de afiar a arma
 	public void SharpenWeapon()
 	{
@@ -114,10 +125,12 @@ public class Character
 		Armor.DurabilityReduce();
 		Armor.ResistenceReduce();
 	}
+
+
 	//mecanica do dano tomado, se ele é reduzido pela armadura, 
-	private void DealDamage(int ammountDmg, int ammountResist)
+	private void DealDamage(int ammountDmg, int ammountResist, int HealAmount)
 	{
-		Life = Life - (ammountDmg - ammountResist);
+		Life = (Life + HealAmount) - (ammountDmg - ammountResist);
 		Debug.Log($"{Name} tomou {ammountDmg - ammountResist} de dano.\n" +
 
 			$"Vida atual de {Name}: {Life}");
@@ -153,4 +166,5 @@ public class Character
 		}
 		return Armor != null;
 	}
+
 }
